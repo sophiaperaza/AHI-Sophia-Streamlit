@@ -36,8 +36,6 @@ def load_outpatient():
     df_outpatient_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_outpatient_2.csv')
     return df_outpatient_2
 
-
-st.title('Medicare — Expenses - NY / NY State')
   
 
 st.title('HHA 507 - Final Assignment')
@@ -60,8 +58,11 @@ st.dataframe(load_outpatient() )
 st.header('Hospital Data Preview')
 st.dataframe(load_hospitals())
 
-st.write('Now that we have our datasets, lets look at the following question:')
+st.subheader('Now that we have our datasets, lets look at the following question:')
 st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
+
+
+
 
 
 
