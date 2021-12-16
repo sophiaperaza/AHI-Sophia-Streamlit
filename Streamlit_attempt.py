@@ -39,8 +39,8 @@ def load_outpatient():
   
 
 st.title('HHA 507 - Final Assignment')
-st.subheader('Presented by Sophia Peraza :smile:') 
-st.write('Happy Holidays :santa:') 
+st.subheader('by Sophia Peraza :smile:') 
+st.write(':santa: Also, Happy Holidays! :santa:') 
 
 # Load the data:     
 df_hospital_2 = load_hospitals()
