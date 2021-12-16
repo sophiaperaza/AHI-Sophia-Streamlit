@@ -38,20 +38,10 @@ def load_outpatient():
 
 
 st.title('Medicare — Expenses - NY / NY State')
-
-
-
-    
-    
-# FAKE LOADER BAR TO STIMULATE LOADING    
-# my_bar = st.progress(0)
-# for percent_complete in range(100):
-#     time.sleep(0.1)
-#     my_bar.progress(percent_complete + 1)
   
 
 st.title('HHA 507 - Final Assignment')
-st.write('Sophia Peraza :smile:') 
+st.write('Present by Sophia Peraza :smile:') 
 
 # Load the data:     
 df_hospital_2 = load_hospitals()
@@ -79,6 +69,9 @@ st.dataframe(dataframe_pivot)
 
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
+sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+
+sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
 
 #Bar Chart
 st.subheader('Hospital Type - NY')
