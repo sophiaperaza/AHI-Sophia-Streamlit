@@ -51,7 +51,7 @@ st.title('Medicare — Expenses - NY / NY State')
   
 
 st.title('HHA 507 - Final Assignment')
-st.write('Sophia Peraza :smile: :peace sign:') 
+st.write('Sophia Peraza :smile:') 
 
 # Load the data:     
 df_hospital_2 = load_hospitals()
@@ -147,12 +147,12 @@ st.dataframe(common_discharges)
 col1, col2 = st.beta_columns(2)
 
 col1.header('Top 10 DRGs')
-col1.dataframe(top10)
+col1.df_inpatient_2(top10)
 
 col2.header('Bottom 10 DRGs')
 col2.dataframe(bottom10)
 
-
+st.markdown('')
 
 
 #Bar Charts of the costs 
