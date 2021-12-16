@@ -68,16 +68,6 @@ ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
 st.dataframe(ny_hospitals)
 
 
-st.subheader('Map of NY Hospital Locations')
-
-hospitals_ny_gps = hospitals_ny['location'].str.strip('()').str.split(' ', expand=True).rename(columns={0: 'Point', 1:'lon', 2:'lat'}) 	
-hospitals_ny_gps['lon'] = hospitals_ny_gps['lon'].str.strip('(')
-hospitals_ny_gps = hospitals_ny_gps.dropna()
-hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
-hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
-
-st.map(hospitals_ny_gps)
-
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
 st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
 
@@ -105,6 +95,7 @@ st.markdown('The majority of hospitals in NY are acute care, followed by psychia
 st.subheader('With a PIE Chart:')
 fig = px.pie(bar1, values='hospital_type', names='index')
 st.plotly_chart(fig)
+
 
 
 
