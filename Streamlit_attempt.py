@@ -76,6 +76,9 @@ st.write('1. How does Stony Brooks hospital type compare to the rest of New York
 st.subheader('Hospital Data Pivot Table')
 dataframe_pivot = df_hospital_2.pivot_table(index=['hospital_name'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
 effectivecare_NY = dataframe_pivot.sort_values('effectiveness_of_care_national_comparison_footnote')
+st.dataframe(effectivecare_NY)
+fig = px.pie(dataframe_pivot, values='hospital_name', names='index')
+st.plotly_chart(fig)
 
 
 ## hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
@@ -98,7 +101,15 @@ st.plotly_chart(fig)
 
 
 
+st.subheader('Map of NY Hospital Locations')
 
+hospitals_ny_gps = hospitals_ny['location'].str.strip('()').str.split(' ', expand=True).rename(columns={0: 'Point', 1:'lon', 2:'lat'}) 	
+hospitals_ny_gps['lon'] = hospitals_ny_gps['lon'].str.strip('(')
+hospitals_ny_gps = hospitals_ny_gps.dropna()
+hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
+hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
+
+st.map(hospitals_ny_gps)
 
 
 #Timeliness of Care
