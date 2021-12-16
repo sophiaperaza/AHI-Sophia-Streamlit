@@ -53,8 +53,9 @@ st.title('Medicare — Expenses - NY / NY State')
 #     my_bar.progress(percent_complete + 1)
   
 
-st.write('Sophia's Final'* :smile:') 
-  
+st.title('HHA 507 - Final Assignment')
+st.write('Sophia Peraza :smile:') 
+
 # Load the data:     
 df_hospital_2 = load_hospitals()
 df_inpatient_2 = load_inatpatient()
