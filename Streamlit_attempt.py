@@ -8,10 +8,7 @@ Created on Tue Dec 14 18:21:16 2021
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  2 14:48:54 2020
 
-TO RUN: 
-    streamlit run week13_streamlit.py
 
 """
 
@@ -66,6 +63,12 @@ df_outpatient_2 = load_outpatient()
 # Preview the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
+
+st.header('Outpatient Data Preview')
+st.dataframe(load_outpatient() )
+
+st.header('Hospital Data Preview')
+st.dataframe(load_hospitals())
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
