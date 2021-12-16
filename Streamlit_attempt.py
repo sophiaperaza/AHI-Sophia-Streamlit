@@ -4,176 +4,189 @@ Created on Tue Dec 14 18:21:16 2021
 
 @author: sophi
 """
+
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Wed Dec  2 10:37:43 2020
+Created on Wed Dec  2 14:48:54 2020
 
+@author: hantswilliams
 
-
-# Datafrom: https://console.cloud.google.com/marketplace/product/hhs/medicare
+TO RUN: 
+    streamlit run week13_streamlit.py
 
 """
 
+import streamlit as st
 import pandas as pd
+import numpy as np
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
+import time
 
 
 
-# from google.cloud import bigquery
-# import pandas_gbq
-# from google.oauth2 import service_account
+@st.cache
+def load_hospitals():
+    df_hospital_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_hospital_2.csv')
+    return df_hospital_2
+
+@st.cache
+def load_inatpatient():
+    df_inpatient_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_inpatient_2.csv')
+    return df_inpatient_2
+
+@st.cache
+def load_outpatient():
+    df_outpatient_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_outpatient_2.csv')
+    return df_outpatient_2
+
+
+st.title('Medicare — Expenses - NY / NY State')
 
 
 
-# credentials = service_account.Credentials.from_service_account_file(
-#     '/Users/hantswilliams/Documents/local_important/pem_files/CampusPO Login-db33e522aedb.json',
-# )
-
-# query1 = """SELECT * FROM `bigquery-public-data.cms_medicare.hospital_general_info`"""
-# query2 = """SELECT * FROM `bigquery-public-data.cms_medicare.inpatient_charges_2015`"""
-# query3 = """SELECT * FROM `bigquery-public-data.cms_medicare.outpatient_charges_2015`"""
-
-# hospitals = pandas_gbq.read_gbq(query1, project_id="moonlit-triumph-864", credentials=credentials)
-# inpatient = pandas_gbq.read_gbq(query2, project_id="moonlit-triumph-864", credentials=credentials)
-# outpatient = pandas_gbq.read_gbq(query3, project_id="moonlit-triumph-864", credentials=credentials)
-
-df_hospital = pd.read_csv("https://raw.githubusercontent.com/hantswilliams/AHI_DataSci_507/main/Deployment_Streamlit/hospital_info.csv")
-df_inpatient = pd.read_csv("https://raw.githubusercontent.com/hantswilliams/AHI_DataSci_507/main/Deployment_Streamlit/inpatient_2015.csv")
-df_outpatient = pd.read_csv("https://raw.githubusercontent.com/hantswilliams/AHI_DataSci_507/main/Deployment_Streamlit/outpatient_2015.csv")
-
-
-
-
-
-
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-#### EDA // what is there for each: 
     
-# Pandas Profiling 
-from pandas_profiling import ProfileReport
+    
+# FAKE LOADER BAR TO STIMULATE LOADING    
+# my_bar = st.progress(0)
+# for percent_complete in range(100):
+#     time.sleep(0.1)
+#     my_bar.progress(percent_complete + 1)
+  
 
-profile1 = ProfileReport(df_hospital, explorative=True)
-profile1.to_file("/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/profiling_df_hospital.html")
+st.write('Hello, *World!* :sunglasses:') 
+  
+# Load the data:     
+df_hospital_2 = load_hospitals()
+df_inpatient_2 = load_inatpatient()
+df_outpatient_2 = load_outpatient()
 
-profile2 = ProfileReport(df_outpatient, explorative=True)
-profile2.to_file("/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/profiling_df_outpatient.html")
 
 
+# Preview the dataframes 
+st.header('Hospital Data Preview')
+st.dataframe(df_hospital_2)
 
-# Sweet Viz 
-import sweetviz as sv
+# Quickly creating a pivot table 
+st.subheader('Hospital Data Pivot Table')
+dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
+st.dataframe(dataframe_pivot)
 
-sweet_report1 = sv.analyze(df_hospital)
-sweet_report1.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_df_hospital.html')
 
-sweet_report2 = sv.analyze(df_outpatient)
-sweet_report2.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_df_outpatient.html')
 
-sweet_report3 = sv.analyze(df_inpatient)
-sweet_report3.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_df_inpatient.html')
+hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
 
+#Bar Chart
+st.subheader('Hospital Type - NY')
+bar1 = hospitals_ny['hospital_type'].value_counts().reset_index()
+st.dataframe(bar1)
 
-# D-tale
-import dtale 
+st.markdown('The majority of hospitals in NY are acute care, followed by psychiatric')
 
-d = dtale.show(df_hospital, ignore_duplicate=True)
-d.open_browser()
 
-d = dtale.show(df_inpatient, ignore_duplicate=True)
-d.open_browser()
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
+st.subheader('With a PIE Chart:')
+fig = px.pie(bar1, values='hospital_type', names='index')
+st.plotly_chart(fig)
 
 
 
+st.subheader('Map of NY Hospital Locations')
 
+hospitals_ny_gps = hospitals_ny['location'].str.strip('()').str.split(' ', expand=True).rename(columns={0: 'Point', 1:'lon', 2:'lat'}) 	
+hospitals_ny_gps['lon'] = hospitals_ny_gps['lon'].str.strip('(')
+hospitals_ny_gps = hospitals_ny_gps.dropna()
+hospitals_ny_gps['lon'] = pd.to_numeric(hospitals_ny_gps['lon'])
+hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
 
+st.map(hospitals_ny_gps)
 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
-### Automatic Data Cleaning 
+#Timeliness of Care
+st.subheader('NY Hospitals - Timelieness of Care')
+bar2 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
+fig2 = px.bar(bar2, x='index', y='timeliness_of_care_national_comparison')
+st.plotly_chart(fig2)
 
-from janitor import clean_names, remove_empty
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national\
+        average as it relates to timeliness of care')
 
-# This cleans the column names as well as removes any duplicate rows
-df_hospital_2 = clean_names(df_hospital)
-df_hospital_2 = remove_empty(df_hospital_2)
 
-df_inpatient_2 = clean_names(df_inpatient)
-df_inpatient_2 = remove_empty(df_inpatient_2)
 
-df_outpatient_2 = clean_names(df_outpatient)
-df_outpatient_2 = remove_empty(df_outpatient_2)
+#Drill down into INPATIENT and OUTPATIENT just for NY 
+st.title('Drill Down into INPATIENT data')
 
 
+inpatient_ny = df_inpatient_2[df_inpatient_2['provider_state'] == 'NY']
+total_inpatient_count = sum(inpatient_ny['total_discharges'])
 
-### Save the cleaned datasets for visualization: 
+st.header('Total Count of Discharges from Inpatient Captured: ' )
+st.header( str(total_inpatient_count) )
 
-df_hospital_2.to_csv('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/df_hospital_2.csv', index=False, encoding='utf-8-sig')
-df_inpatient_2.to_csv('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/df_inpatient_2.csv', index=False, encoding='utf-8-sig')
-df_outpatient_2.to_csv('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/df_outpatient_2.csv', index=False, encoding='utf-8-sig')
 
 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
 
+##Common D/C 
 
+common_discharges = inpatient_ny.groupby('drg_definition')['total_discharges'].sum().reset_index()
 
 
+top10 = common_discharges.head(10)
+bottom10 = common_discharges.tail(10)
 
 
 
+st.header('DRGs')
+st.dataframe(common_discharges)
 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
+col1, col2 = st.beta_columns(2)
 
-### Want to compare 
-# 	provider_id	hospital_name
-#   	 330393	   SUNY/STONY BROOK UNIVERSITY HOSPITAL
+col1.header('Top 10 DRGs')
+col1.dataframe(top10)
 
-# Create stonybrook datasets 
-sb_hospital = df_hospital_2[df_hospital_2['provider_id'] == '330393']
-sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
-sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
+col2.header('Bottom 10 DRGs')
+col2.dataframe(bottom10)
 
 
-sb_inpatient_analysis = sv.analyze(sb_inpatient)
-sb_inpatient_analysis.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_df_inpatient_sb.html')
 
-sb_outpatient_analysis = sv.analyze(sb_outpatient)
-sb_outpatient_analysis.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_df_outpatient_sb.html')
 
+#Bar Charts of the costs 
 
-########################################################################################################################
-########################################################################################################################
-########################################################################################################################
+costs = inpatient_ny.groupby('provider_name')['avsterage_total_payments'].sum().reset_index()
+costs['average_total_payments'] = costs['average_total_payments'].astype('int64')
 
 
-nonsb_hospital = df_hospital_2[df_hospital_2['provider_id'] != '330393']
-nonsb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] != 330393]
-nonsb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] != 330393]
+costs_medicare = inpatient_ny.groupby('provider_name')['average_medicare_payments'].sum().reset_index()
+costs_medicare['average_medicare_payments'] = costs_medicare['average_medicare_payments'].astype('int64')
 
 
-my_report = sv.compare([sb_inpatient, "Inpatient_SB"], [nonsb_inpatient, "Inpatient_NonSB"])
-my_report.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/AHI_STATS_507/Week13_Summary/output/sweet_report_inpatient_compare.html')
+costs_sum = costs.merge(costs_medicare, how='left', left_on='provider_name', right_on='provider_name')
+costs_sum['delta'] = costs_sum['average_total_payments'] - costs_sum['average_medicare_payments']
 
 
+st.title('COSTS')
 
+bar3 = px.bar(costs_sum, x='provider_name', y='average_total_payments')
+st.plotly_chart(bar3)
+st.header("Hospital - ")
+st.dataframe(costs_sum)
 
 
+#Costs by Condition and Hospital / Average Total Payments
+costs_condition_hospital = inpatient_ny.groupby(['provider_name', 'drg_definition'])['average_total_payments'].sum().reset_index()
+st.header("Costs by Condition and Hospital - Average Total Payments")
+st.dataframe(costs_condition_hospital)
 
 
 
+# hospitals = costs_condition_hospital['provider_name'].drop_duplicates()
+# hospital_choice = st.sidebar.selectbox('Select your hospital:', hospitals)
+# filtered = costs_sum["provider_name"].loc[costs_sum["provider_name"] == hospital_choice]
+# st.dataframe(filtered)
 
 
 
@@ -183,4 +196,4 @@ my_report.show_html('/Users/hantswilliams/Dropbox/Biovirtua/Python_Projects/ahi/
 
 
 
-
+          
