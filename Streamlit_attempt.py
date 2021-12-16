@@ -16,12 +16,12 @@ TO RUN:
 """
 
 import streamlit as st
-import scipy
 import pandas as pd
 import numpy as np
-import plotly.figure_factory as ff
+import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 import time
-
 
 
 @st.cache
@@ -54,7 +54,7 @@ st.title('Medicare — Expenses - NY / NY State')
   
 
 st.title('HHA 507 - Final Assignment')
-st.write('Sophia Peraza :smile:') 
+st.write('Sophia Peraza :smile: :peace sign:') 
 
 # Load the data:     
 df_hospital_2 = load_hospitals()
@@ -86,7 +86,7 @@ st.markdown('The majority of hospitals in NY are acute care, followed by psychia
 
 
 st.subheader('With a PIE Chart:')
-fig = ff.pie(bar1, values='hospital_type', names='index')
+fig = px.pie(bar1, values='hospital_type', names='index')
 st.plotly_chart(fig)
 
 
