@@ -77,7 +77,8 @@ st.subheader('Hospital Data Pivot Table')
 dataframe_pivot = df_hospital_2.pivot_table(index=['hospital_name'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
 effectivecare_NY = dataframe_pivot.sort_values('effectiveness_of_care_national_comparison_footnote')
 st.dataframe(effectivecare_NY)
-
+fig = px.pie(dataframe_pivot, values='hospital_name', names='index')
+st.plotly_chart(fig)
 
 
 ## hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
