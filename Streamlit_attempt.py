@@ -53,7 +53,7 @@ st.title('Medicare — Expenses - NY / NY State')
 #     my_bar.progress(percent_complete + 1)
   
 
-st.write('Hello, *World!* :sunglasses:') 
+st.write('Sophia's Final'* :smile:') 
   
 # Load the data:     
 df_hospital_2 = load_hospitals()
@@ -85,7 +85,7 @@ st.markdown('The majority of hospitals in NY are acute care, followed by psychia
 
 
 st.subheader('With a PIE Chart:')
-fig = px.pie(bar1, values='hospital_type', names='index')
+fig = ff.pie(bar1, values='hospital_type', names='index')
 st.plotly_chart(fig)
 
 
