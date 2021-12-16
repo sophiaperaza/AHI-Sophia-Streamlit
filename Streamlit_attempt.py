@@ -75,7 +75,9 @@ st.subheader('Hospital Data Pivot Table')
 dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
 st.dataframe(dataframe_pivot)
 
-
+hospitals_ny = hospitaldf[hospitaldf['state'] == 'NY']
+st.header('Hospitals in New York Summary')
+st.dataframe(hospitals_ny)
 
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
