@@ -39,7 +39,7 @@ def load_outpatient():
   
 
 st.title('HHA 507 - Final Assignment')
-st.subheader('by Sophia Peraza :smile:') 
+st.subheader('Presentby Sophia Peraza :smile:') 
 st.write(':santa: Also, Happy Holidays! :santa:') 
 
 # Load the data:     
@@ -48,7 +48,7 @@ df_inpatient_2 = load_inatpatient()
 df_outpatient_2 = load_outpatient()
 
 
-st.header('Lets preview at our datasets of interest first')
+st.header('We will begin previewing at our datasetsfirst')
 # Preview the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
@@ -61,8 +61,18 @@ st.dataframe(load_hospitals())
 
 st.subheader('Now that we have our datasets, lets look at the following question:')
 st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
+ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
+st.header('New York Hospitals')
+st.dataframe(ny_hospitals)
 
 
+
+
+# Start with creating a dataframe for NY hospitals  
+hospitals_ny = hospitaldf[hospitaldf['state'] == 'NY']
+st.header('Hospitals in New York Summary')
+st.markdown('This dataset filters out hospitals located in New York from the main hospital dataframe')
+st.dataframe(hospitals_ny)
 
 
 
