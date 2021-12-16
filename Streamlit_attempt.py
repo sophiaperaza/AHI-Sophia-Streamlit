@@ -66,6 +66,7 @@ st.dataframe(load_hospitals())
 st.header('New York Hospitals')
 ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
 st.dataframe(ny_hospitals)
+ny_hospitals = ny_hospitals.sort_values('hospital_name')
 
 
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
@@ -74,18 +75,16 @@ st.write('1. How does Stony Brooks hospital type compare to the rest of New York
 
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
-dataframe_pivot = df_hospital_2.pivot_table(index=['hospital_name'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
-effectivecare_NY = dataframe_pivot.sort_values('effectiveness_of_care_national_comparison_footnote')
-st.dataframe(effectivecare_NY)
-fig = px.pie(dataframe_pivot, values='hospital_name', names='index')
-st.plotly_chart(fig)
+dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
+st.dataframe(dataframe_pivot)
 
 
-## hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
-# sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
-# sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
+sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+
+sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
 
 #Bar Chart
 st.subheader('Hospital Type - NY')
