@@ -10,19 +10,16 @@ Created on Tue Dec 14 18:21:16 2021
 """
 Created on Wed Dec  2 14:48:54 2020
 
-@author: hantswilliams
-
 TO RUN: 
     streamlit run week13_streamlit.py
 
 """
 
 import streamlit as st
+import scipy
 import pandas as pd
 import numpy as np
-import plotly.express as px
-from plotly.subplots import make_subplots
-import plotly.graph_objects as go
+import plotly.figure_factory as ff
 import time
 
 
