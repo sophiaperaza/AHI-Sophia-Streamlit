@@ -75,7 +75,9 @@ st.write('1. How does Stony Brooks hospital type compare to the rest of New York
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
 dataframe_pivot = df_hospital_2.pivot_table(index=['hospital_name'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
-st.dataframe(dataframe_pivot)
+effectivecare_NY = dataframe_pivot.sort_values('effectiveness_of_care_national_comparison_footnote')
+st.dataframe(effectivecare_NY)
+
 
 
 ## hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
