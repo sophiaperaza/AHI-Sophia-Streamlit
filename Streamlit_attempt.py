@@ -66,7 +66,7 @@ dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effe
 st.dataframe(dataframe_pivot)
 
 
-
+## trying to filter 
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
 sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
