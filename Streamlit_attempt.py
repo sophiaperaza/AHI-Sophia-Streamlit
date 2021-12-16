@@ -11,7 +11,7 @@ Created on Tue Dec 14 18:21:16 2021
 
 
 """
-
+## importing required packages! (see requirements txt file)
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -20,7 +20,7 @@ from plotly.subplots import make_subplots
 import plotly.graph_objects as go
 import time
 
-
+## Loading in datasets
 @st.cache
 def load_hospitals():
     df_hospital_2 = pd.read_csv('https://raw.githubusercontent.com/hantswilliams/AHI_STATS_507/main/Week13_Summary/output/df_hospital_2.csv')
@@ -37,12 +37,12 @@ def load_outpatient():
     return df_outpatient_2
 
   
-
+### Title section
 st.title('An Analysis of Hospital, Outpatient and Inpatient Performances and Payments')
 st.subheader('HHA 507 - Final Assignment by: Sophia Peraza :smile:') 
 st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:') 
 
-# Load the data:     
+# loading the data:     
 df_hospital_2 = load_hospitals()
 df_inpatient_2 = load_inatpatient()
 df_outpatient_2 = load_outpatient()
@@ -50,7 +50,7 @@ df_outpatient_2 = load_outpatient()
 
 st.header('We will begin previewing at our datasets first')
 st.caption('Note: these datasets provide national insight into hospital, inpatient and outpatient facilities across the United States') 
-# Preview the dataframes 
+# Previewing the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
 
@@ -65,25 +65,21 @@ st.dataframe(load_hospitals())
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
 st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
 
-# Start with creating a dataframe for NY hospitals  
-st.header('New York Hospitals')
-ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
-st.dataframe(ny_hospitals)
-ny_hospitals = ny_hospitals.sort_values('hospital_name')
-
 
 # Quickly creating a pivot table 
-st.subheader('Hospital Data Pivot Table')
-dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
-st.dataframe(dataframe_pivot)
+#st.subheader('Hospital Data Pivot Table')
+#dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
+#st.dataframe(dataframe_pivot)
 
-
-
+# Start with creating a dataframe for NY hospitals
+st.header('New York Hospitals')
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
+st.dataframe(hospitals_ny)
+hospitals_ny = hospitals_ny.sort_values('hospital_name')
 
-sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+#sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
 
-sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
+#sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
 
 #Bar Chart
 st.subheader('Hospital Type - NY')
@@ -91,13 +87,13 @@ bar1 = hospitals_ny['hospital_type'].value_counts().reset_index()
 st.dataframe(bar1)
 
 st.markdown('The majority of hospitals in NY are acute care, followed by psychiatric')
-
+st.markdown('Stony Brook is categorized as acute care, which falls under the majority of hospital type in NY ')
 
 st.subheader('With a PIE Chart:')
 fig = px.pie(bar1, values='hospital_type', names='index')
 st.plotly_chart(fig)
 
-
+### Here's a Map of NY hospital locations-----------------------------------------------------------------------
 
 st.subheader('Map of NY Hospital Locations')
 
