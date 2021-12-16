@@ -39,7 +39,8 @@ def load_outpatient():
   
 
 st.title('HHA 507 - Final Assignment')
-st.write('Present by Sophia Peraza :smile:') 
+st.subheader('Presented by Sophia Peraza :smile:') 
+st.write('Happy Holidays :santa:') 
 
 # Load the data:     
 df_hospital_2 = load_hospitals()
@@ -47,7 +48,7 @@ df_inpatient_2 = load_inatpatient()
 df_outpatient_2 = load_outpatient()
 
 
-
+st.header('Lets preview at our datasets of interest first')
 # Preview the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
