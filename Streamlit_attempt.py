@@ -60,13 +60,18 @@ st.dataframe(load_outpatient() )
 st.header('Hospital Data Preview')
 st.dataframe(load_hospitals())
 
+st.write('Now that we have our datasets, lets look at the following question:')
+st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
+
+
+
 # Quickly creating a pivot table 
 st.subheader('Hospital Data Pivot Table')
 dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
 st.dataframe(dataframe_pivot)
 
 
-## trying to filter 
+
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 
 sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
