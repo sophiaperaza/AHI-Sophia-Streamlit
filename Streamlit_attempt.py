@@ -62,15 +62,14 @@ st.dataframe(load_hospitals())
 
 # Let take a look at NY Hospitals!-------------------------------------------------------------------------------------- 
 
+st.subheader('Now that we have looked at our datasets, lets look at the following question:')
+st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
+
 # Start with creating a dataframe for NY hospitals  
 st.header('New York Hospitals')
 ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
 st.dataframe(ny_hospitals)
 ny_hospitals = ny_hospitals.sort_values('hospital_name')
-
-
-st.subheader('Now that we have looked at our datasets, lets look at the following question:')
-st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
 
 
 # Quickly creating a pivot table 
