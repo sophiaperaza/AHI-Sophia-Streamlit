@@ -78,12 +78,15 @@ dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effe
 st.dataframe(dataframe_pivot)
 
 
-
-hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
-
+## filtering inpatient dataset by SBU 
 sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+st.dataframe(sb_patient)
 
-sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
+## hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
+
+# sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
+
+# sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
 
 #Bar Chart
 st.subheader('Hospital Type - NY')
