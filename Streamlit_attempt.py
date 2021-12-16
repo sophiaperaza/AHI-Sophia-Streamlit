@@ -49,7 +49,7 @@ df_outpatient_2 = load_outpatient()
 
 
 st.header('We will begin previewing at our datasets first')
-st.subheader('Note: these datasets provide national insight into hospital, inpatient and outpatient facilities across the United States') 
+st.caption('Note: these datasets provide national insight into hospital, inpatient and outpatient facilities across the United States') 
 # Preview the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
@@ -66,7 +66,6 @@ st.dataframe(load_hospitals())
 st.header('New York Hospitals')
 ny_hospitals = df_hospital_2[df_hospital_2['state'] == 'NY']
 st.dataframe(ny_hospitals)
-ny_hospitals = ny_hospitals.sort_values('hospital_name')
 
 
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
