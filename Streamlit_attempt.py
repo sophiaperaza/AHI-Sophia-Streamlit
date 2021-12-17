@@ -44,16 +44,13 @@ st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:')
 
 # loading the data:     
 df_hospital_2 = load_hospitals()
-df_inpatient_2 = load_inatpatient()
+df_inpatient_2 = load_inpatient()
 df_outpatient_2 = load_outpatient()
 
 
 st.header('We will begin previewing at our datasets first')
 st.caption('Note: these datasets provide insight into hospital, inpatient and outpatient payment and performance data across the United States') 
 # Previewing the dataframes
-df_hospital_2['provider_id'] = df_hospital_2['provider_id'].astype(str)
-df_inpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
-df_outpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
@@ -64,13 +61,18 @@ st.dataframe(df_inpatient_2)
 st.header('Outpatient Data Preview')
 st.dataframe(df_outpatient_2)
 
-
 ## We will need to merge hospital & outpatient // hospital & inpatient
+## need to make provider_id a string to avoid errors merging 
+df_hospital_2['provider_id'] = df_hospital_2['provider_id'].astype(str)
+df_inpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+df_outpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+
+#left merge using provider_id 
 st.header('Hospital & Outpatient Data')
 outpatient_merge = df_outpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(outpatient_merge)
 
-st.header('Hospital & Outpatient Data')
+st.header('Hospital & inpatient Data')
 inpatient_merge = df_inpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(inpatient_merge)
 
