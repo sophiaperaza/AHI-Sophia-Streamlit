@@ -44,7 +44,7 @@ st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:')
 
 # loading the data:     
 df_hospital_2 = load_hospitals()
-df_inpatient_2 = load_inpatient()
+df_inpatient_2 = load_inatpatient()
 df_outpatient_2 = load_outpatient()
 
 
@@ -53,13 +53,14 @@ st.caption('Note: these datasets provide insight into hospital, inpatient and ou
 # Previewing the dataframes
 
 st.header('Hospital Data Preview')
-st.dataframe(df_hospital_2)
+st.dataframe(load_hospitals())
 
 st.header('Inpatient Data Preview')
-st.dataframe(df_inpatient_2)
+st.dataframe(load_inatpatient())
+
 
 st.header('Outpatient Data Preview')
-st.dataframe(df_outpatient_2)
+st.dataframe(load_outpatient() )
 
 ## We will need to merge hospital & outpatient // hospital & inpatient
 ## need to make provider_id a string to avoid errors merging 
