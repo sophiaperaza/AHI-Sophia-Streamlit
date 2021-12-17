@@ -65,17 +65,19 @@ st.dataframe(load_outpatient() )
 ## We will need to merge hospital & outpatient // hospital & inpatient
 ## need to make provider_id a string to avoid errors merging 
 df_hospital_2['provider_id'] = df_hospital_2['provider_id'].astype(str)
-df_inpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+df_inpatient_2['provider_id'] =df_inpatient_2['provider_id'].astype(str)
 df_outpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+
+
+st.header('Hospital & inpatient Data')
+inpatient_merge = df_inpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+st.dataframe(inpatient_merge)
 
 #left merge using provider_id 
 st.header('Hospital & Outpatient Data')
 outpatient_merge = df_outpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(outpatient_merge)
 
-st.header('Hospital & inpatient Data')
-inpatient_merge = df_inpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
-st.dataframe(inpatient_merge)
 
 # Let take a look at NY Hospitals!-------------------------------------------------------------------------------------- 
 
