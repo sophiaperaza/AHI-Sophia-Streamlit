@@ -164,7 +164,7 @@ st.caption('Columns to examine: safety of care national comparison, mortality na
 SB_Outpt_performance_pivot = sb_outpt.pivot_table(index=['hospital_name', 'mortality_national_comparison','safety_of_care_national_comparison'],values=['outpatient_services'])
 st.dataframe(SB_Outpt_performance_pivot)  
 
-st.title('Now that we know how SBU performance ranks for safety of care and morality, lets quickly take a look at the rest of NY')
+st.write('Now that we know how SBU performance ranks for safety of care and morality, lets quickly take a look at the rest of NY')
 # Safety of care national comparison-NY
 st.subheader('NY Hospitals - Safety of Care National Comparison')
 bar1 = hospitals_ny['safety_of_care_national_comparison'].value_counts().reset_index()
@@ -179,20 +179,28 @@ fig2 = px.bar(bar2, x='index', y='mortality_national_comparison')
 st.plotly_chart(fig2)
 st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area are the same as the national average as it relates to morality rates')
 
-st.title('Lets take a look at another hospital, one outside of Suffolk County')
+st.header('Lets take a look at another hospital, one outside of Suffolk County')
 st.subheader('5. Lets examine how NEW YORK-PRESBYTERIAN/QUEENS compare to the rest of NY hospital/inpatient df in the following?')
 st.caption('Columns to examine: effectiveness of care national comparison, patient experience national comparison and total_discharges')
 Pres_inpt_perform_pivot = Presbyterian_inpt.pivot_table(index=['hospital_name','effectiveness_of_care_national_comparison','patient_experience_national_comparison'],values=['total_discharges'])
 st.dataframe(Pres_inpt_perform_pivot)
-st.markdown(' Based on the above, we can see the NY Presbyterian-Queens is the same as the national average for effectiveness of care and below average for patient experience')
+st.markdown(' Based on the above, we can see NY Presbyterian-Queens is the same as the national average for effectiveness of care and below average for patient experience')
 
-st.title('Now that we know how NY Presbyterian performance ranks for effectiveness of care national comparison and patient experience national comparison, lets quickly take a look at the rest of NY')
+st.header('Now that we know how NY Presbyterian performance ranks for effectiveness of care national comparison and patient experience national comparison, lets quickly take a look at the rest of NY')
 ## effectiveness of care national comparison- NY 
-st.subheader('NY Hospitals - Mortality National Comparison')
+st.subheader('NY Hospitals - Effectiveness of care')
 bar4 = hospitals_ny['effectiveness_of_care_national_comparison'].value_counts().reset_index()
 fig4 = px.bar(bar4, x='index', y='effectiveness_of_care_national_comparison')
 st.plotly_chart(fig4)
-st.markdown(' Based on the above, we can see the NY Presbyterian-Queens is the same as the national average for effectiveness of care and below average for patient experience')
+st.markdown(' Based on the above, we can see the majority of NY is the same as the national average for effectiveness of care')
+
+
+##  patient experience national comparison- NY 
+st.subheader('NY Hospitals - Patient experience national comparison')
+bar5 = hospitals_ny['patient_experience_national_comparison'].value_counts().reset_index()
+fig5 = px.bar(bar5, x='index', y='patient_experience_national_comparison')
+st.plotly_chart(fig5)
+st.markdown(' Based on the above, we can see the majority of NY is the same as the national average for patient experience')
 
 
 
@@ -210,24 +218,24 @@ st.map(hospitals_ny_gps)
 
 ## -----------------------------------------------------------------------------------------------------------
 #Timeliness of Care
-st.subheader('NY Hospitals - Timeliness of Care')
-bar3 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
-fig3 = px.bar(bar3, x='index', y='timeliness_of_care_national_comparison')
-st.plotly_chart(fig3)
+##st.subheader('NY Hospitals - Timeliness of Care')
+## bar3 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
+## fig3 = px.bar(bar3, x='index', y='timeliness_of_care_national_comparison')
+## st.plotly_chart(fig3)
 
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
+## st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
 
 
 
 #Drill down into INPATIENT and OUTPATIENT just for NY 
-st.title('Drill Down into INPATIENT data')
+#st.title('Drill Down into INPATIENT data')
 
 
-inpatient_ny = df_inpatient_2[df_inpatient_2['provider_state'] == 'NY']
-total_inpatient_count = sum(inpatient_ny['total_discharges'])
+##inpatient_ny = df_inpatient_2[df_inpatient_2['provider_state'] == 'NY']
+##total_inpatient_count = sum(inpatient_ny['total_discharges'])
 
-st.header('Total Count of Discharges from Inpatient Captured: ' )
-st.header( str(total_inpatient_count) )
+## st.header('Total Count of Discharges from Inpatient Captured: ' )
+## st.header( str(total_inpatient_count) )
 
 
 
@@ -238,29 +246,29 @@ st.header( str(total_inpatient_count) )
 ## 2. Most expensive inpatient DRGs
 ## 3. Most expensive outpatient DRGS
 
-SBU_Inpatient = df_merged_clean2[df_merged_clean2['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY HOSPITAL']
-common_discharges = inpatient_ny.groupby('drg_definition')['average_total_payments'].sum().reset_index()
+# SBU_Inpatient = df_merged_clean2[df_merged_clean2['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY HOSPITAL']
+## common_discharges = inpatient_ny.groupby('drg_definition')['average_total_payments'].sum().reset_index()
 
 
-top10 = common_discharges.head(10)
-bottom10 = common_discharges.tail(10)
+## top10 = common_discharges.head(10)
+## bottom10 = common_discharges.tail(10)
 
-st.header('DRGs')
-st.dataframe(common_discharges)
+## st.header('DRGs')
+## st.dataframe(common_discharges)
 
 
-col1, col2 = st.columns(2)
+## col1, col2 = st.columns(2)
 
 ## top 10 DRGS for inpatient 
-col1.header('Top 10 DRGs')
-col1.dataframe(top10)
+## col1.header('Top 10 DRGs')
+## col1.dataframe(top10)
 
 
 ## Bottom 10 DRGS for inpatient 
-col2.header('Bottom 10 DRGs')
-col2.dataframe(bottom10)
+## col2.header('Bottom 10 DRGs')
+## col2.dataframe(bottom10)
 
-st.markdown('')
+# st.markdown('')
 
 
 
