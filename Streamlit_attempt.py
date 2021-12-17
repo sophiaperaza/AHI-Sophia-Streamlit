@@ -42,15 +42,15 @@ st.title('CMS - Hospital/Inpatient/Outpatient Data')
 st.subheader('HHA 507 - Final Assignment by: Sophia Peraza ') 
 st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:') 
 
-# loading the data:     
+# loading the data-----------------------------------------------------------------------------------------------------------------    
 df_hospital_2 = load_hospitals()
 df_inpatient_2 = load_inatpatient()
 df_outpatient_2 = load_outpatient()
 
 
+# Previewing the dataframes----------------------------------------------------------------------------------------------------------
 st.header('We will begin previewing at our datasets first')
 st.caption('Note: these datasets provide insight into hospital, inpatient and outpatient payment and performance data across the United States') 
-# Previewing the dataframes
 
 st.header('Hospital Data Preview')
 st.dataframe(load_hospitals())
@@ -58,28 +58,49 @@ st.dataframe(load_hospitals())
 st.header('Inpatient Data Preview')
 st.dataframe(load_inatpatient())
 
-
 st.header('Outpatient Data Preview')
 st.dataframe(load_outpatient() )
 
-## We will need to merge hospital & outpatient // hospital & inpatient
+## We will need to merge our dfs ie.hospital & outpatient // hospital & inpatient // other dfs of interest---------------------------------------------------------------
+
 ## need to make provider_id a string to avoid errors merging 
 df_hospital_2['provider_id'] = df_hospital_2['provider_id'].astype(str)
 df_inpatient_2['provider_id'] =df_inpatient_2['provider_id'].astype(str)
 df_outpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
 
-
-st.header('Hospital & inpatient Data')
+st.title('Lets explore further by merging our datasets of interest!')
+st.header('ALL Hospital & Inpatient Data')
 inpatient_merge = df_inpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(inpatient_merge)
 
 #left merge using provider_id 
-st.header('Hospital & Outpatient Data')
+st.header('ALL Hospital & Outpatient Data')
 outpatient_merge = df_outpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
 st.dataframe(outpatient_merge)
 
 
-# Let take a look at NY Hospitals!-------------------------------------------------------------------------------------- 
+### Lets look at SBU Outpatient 
+st.header('SBU Hospital & Outpatient Data')
+sb_outpt = outpatient_merge[outpatient_merge['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY HOSPITAL']
+st.dataframe(sb_outpt)
+
+## Lets look at SBU Inpatient 
+st.header('SBU Hospital & Inpatient Data')
+sb_inpt = inpatient_merge[inpatient_merge['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY HOSPITAL']
+st.dataframe(sb_inpt)
+
+## Lets look at NS/LIJ HS HUNTINGTON HOSPITAL hospitals/outpatient
+st.header('NS/LIJ HS HUNTINGTON Hospital & Outpatient Data')
+st.caption('We can use NSLIJ as comparative point to SBU as another hospital in Suffolk County  ')
+NSLIJ_outpt = outpatient_merge[outpatient_merge['hospital_name'] == 'NS/LIJ HS HUNTINGTON HOSPITAL']
+st.dataframe(NSLIJ_outpt)
+
+## Lets look at NY Presbyterian Hospital / Inpatient 
+st.header('NY Presbyterian Hospital & inpatient Data')
+Presbyterian_inpt = inpatient_merge[inpatient_merge['hospital_name'] == 'NEW YORK-PRESBYTERIAN/QUEENS']
+st.dataframe(Presbyterian_inpt)
+
+# Let take a look at ALL NY Hospitals!-------------------------------------------------------------------------------------- 
 
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
 st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
