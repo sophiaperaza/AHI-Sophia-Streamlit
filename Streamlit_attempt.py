@@ -130,6 +130,19 @@ SB_Outpt_DRG_pivot = sb_outpt.pivot_table(index=['provider_id','apc'],values=['a
 SB_Outpt_DRG_pivot_desc = SB_Outpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(SB_Outpt_DRG_pivot_desc)  
 
+top10 = SB_Outpt_DRG_pivot_desc.head(10)
+bottom10 = SB_Outpt_DRG_pivot_desc.tail(10)
+
+st.header('DRGs for SBU inpatient/hospital')
+st.dataframe(SB_Outpt_DRG_pivot_desc)
+col1, col2 = st.columns(2)
+
+## top 10 DRGS for inpatient 
+col1.header('Top 10 DRGs')
+col1.dataframe(top10)
+
+
+
 st.subheader('2. Lets answer: Most expensive DRG for SBU inpatient/hospital')
 st.write('We can see based on the pivot table below that: the most expensive DRG for SBU inpatient/hospital df was 003 - ECMO OR TRACH W MV >96 HRS OR PDX EXC FACE, MOUTH & NECK W MAJ O.R.	216636.88')
 SB_inpt_DRG_pivot = sb_inpt.pivot_table(index=['provider_id','drg_definition'],values=['average_total_payments'])
