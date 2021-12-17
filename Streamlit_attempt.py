@@ -164,19 +164,35 @@ st.caption('Columns to examine: safety of care national comparison, mortality na
 SB_Outpt_performance_pivot = sb_outpt.pivot_table(index=['hospital_name', 'mortality_national_comparison','safety_of_care_national_comparison'],values=['outpatient_services'])
 st.dataframe(SB_Outpt_performance_pivot)  
 
-# Safety of care national comparison
+st.title('Now that we know how SBU performance ranks for safety of care and morality, lets quickly take a look at the rest of NY')
+# Safety of care national comparison-NY
 st.subheader('NY Hospitals - Safety of Care National Comparison')
 bar1 = hospitals_ny['safety_of_care_national_comparison'].value_counts().reset_index()
 fig1 = px.bar(bar1, x='index', y='safety_of_care_national_comparison')
 st.plotly_chart(fig1)
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care :sad:')
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care')
 
-## Mortality National Comparison
+## Mortality National Compariso-NY
 st.subheader('NY Hospitals - Mortality National Comparison')
 bar2 = hospitals_ny['mortality_national_comparison'].value_counts().reset_index()
 fig2 = px.bar(bar2, x='index', y='mortality_national_comparison')
 st.plotly_chart(fig2)
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care :sad:')
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area are the same as the national average as it relates to morality rates')
+
+st.title('Lets take a look at another hospital, one outside of Suffolk County')
+st.subheader('5. Lets examine how NEW YORK-PRESBYTERIAN/QUEENS compare to the rest of NY hospital/inpatient df in the following?')
+st.caption('Columns to examine: effectiveness of care national comparison, patient experience national comparison and total_discharges')
+Pres_inpt_perform_pivot = Presbyterian_inpt.pivot_table(index=['hospital_name','effectiveness_of_care_national_comparison','patient_experience_national_comparison'],values=['total_discharges'])
+st.dataframe(Pres_inpt_perform_pivot)
+st.markdown(' Based on the above, we can see the NY Presbyterian-Queens is the same as the national average for effectiveness of care and below average for patient experience')
+
+st.title('Now that we know how NY Presbyterian performance ranks for effectiveness of care national comparison and patient experience national comparison, lets quickly take a look at the rest of NY')
+## effectiveness of care national comparison- NY 
+st.subheader('NY Hospitals - Mortality National Comparison')
+bar4 = hospitals_ny['effectiveness_of_care_national_comparison'].value_counts().reset_index()
+fig4 = px.bar(bar4, x='index', y='effectiveness_of_care_national_comparison')
+st.plotly_chart(fig4)
+st.markdown(' Based on the above, we can see the NY Presbyterian-Queens is the same as the national average for effectiveness of care and below average for patient experience')
 
 
 
