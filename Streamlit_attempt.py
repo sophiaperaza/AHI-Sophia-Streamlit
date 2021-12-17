@@ -38,7 +38,7 @@ def load_outpatient():
 
   
 ### Title section
-st.title('An Analysis of Hospital, Outpatient and Inpatient Performances and Payments')
+st.title('CMS - Hospital/Inpatient/Outpatient Data')
 st.subheader('HHA 507 - Final Assignment by: Sophia Peraza :smile:') 
 st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:') 
 
@@ -49,7 +49,7 @@ df_outpatient_2 = load_outpatient()
 
 
 st.header('We will begin previewing at our datasets first')
-st.caption('Note: these datasets provide national insight into hospital, inpatient and outpatient facilities across the United States') 
+st.caption('Note: these datasets provide insight into hospital, inpatient and outpatient payment and performance data across the United States') 
 # Previewing the dataframes 
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
@@ -105,14 +105,14 @@ hospitals_ny_gps['lat'] = pd.to_numeric(hospitals_ny_gps['lat'])
 
 st.map(hospitals_ny_gps)
 
-
+## -----------------------------------------------------------------------------------------------------------
 #Timeliness of Care
-st.subheader('NY Hospitals - Timelieness of Care')
+st.subheader('NY Hospitals - Timeliness of Care')
 bar2 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
 fig2 = px.bar(bar2, x='index', y='timeliness_of_care_national_comparison')
 st.plotly_chart(fig2)
 
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national\
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national
         average as it relates to timeliness of care')
 
 
@@ -131,7 +131,11 @@ st.header( str(total_inpatient_count) )
 
 
 
-##Common D/C 
+##Common D/C ---------------------------------------------------------------------------------------------
+## Other Questions to keep in mind 
+## 2. Most expensive inpatient DRGs
+## 3. Most expensive outpatient DRGS
+
 
 common_discharges = inpatient_ny.groupby('drg_definition')['total_discharges'].sum().reset_index()
 
@@ -139,21 +143,29 @@ common_discharges = inpatient_ny.groupby('drg_definition')['total_discharges'].s
 top10 = common_discharges.head(10)
 bottom10 = common_discharges.tail(10)
 
-
-
 st.header('DRGs')
 st.dataframe(common_discharges)
 
 
 col1, col2 = st.columns(2)
 
+## top 10 DRGS for inpatient 
 col1.header('Top 10 DRGs')
 col1.dataframe(top10)
 
+
+## Bottom 10 DRGS for inpatient 
 col2.header('Bottom 10 DRGs')
 col2.dataframe(bottom10)
 
 st.markdown('')
+
+
+
+
+
+
+
 
 
 #Bar Charts of the costs 
