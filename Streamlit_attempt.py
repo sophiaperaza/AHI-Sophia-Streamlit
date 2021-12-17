@@ -125,8 +125,8 @@ st.plotly_chart(fig)
 
 
 ## Answering questions ------------------------------------------------------------------------------------------------------------
-st.header('1. Lets continue to explore SB Hospital by answering the following')
-st.subheader('Most expensive DRG for SBU outpatient/hospital')
+st.header('Lets continue to explore SB Hospital by answering the following')
+st.subheader('1. Most expensive DRG for SBU outpatient/hospital')
 st.write('We can see based on the pivot table below that:For SBU hospital/outpatient facilities the Most expensive outpatient DRG is 0074 - Level IV Endoscopy Upper Airway')
 SB_Outpt_DRG_pivot = sb_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
 SB_Outpt_DRG_pivot_desc = SB_Outpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
@@ -148,6 +148,14 @@ st.write('We can see based on the pivot table below that: the most expensive DRG
 SB_inpt_DRG_pivot = sb_inpt.pivot_table(index=['provider_id','drg_definition'],values=['average_total_payments'])
 SB_inpt_DRG_pivot_desc = SB_inpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
 st.dataframe(SB_inpt_DRG_pivot_desc)
+
+
+st.write('Lets see how the most expensive DRG for SBU Hospital/Outpatient compares to another Suffolk County Hospital/Outpatient')
+st.subheader('3. Most expensive DRG for NS/LIJ HS HUNTINGTON Outpatient/Hospital')
+st.write('We can see based on the pivot table below that:the most expensive DRG for NS/LIJ HS HUNTINGTON HOSPITAL is 0203 - Level IV Nerve Injections	1316.401600')
+NSLIJ_outpt_DRG_pivot = NSLIJ_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
+NSLIJ_outpt_DRG_pivot_desc = NSLIJ_outpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
+st.dataframe(NSLIJ_outpt_DRG_pivot_desc)  
 
 
 ### Here's a Map of NY hospital locations-------------------------------------------------------------------------------------------
