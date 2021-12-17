@@ -159,9 +159,17 @@ st.dataframe(NSLIJ_outpt_DRG_pivot_desc)
 
 
 st.subheader('4. Lets examine: How does SBU compare to the rest of NY (outpatient/hospital) ? We will interpret this question in terms of performance for outpatient')
-st.write('Columns to examine: safety of care national comparison, mortality nation comparison and outpatient services')
+st.write('We see that for safety of care national comparison and mortality nation comparison, SBU is above average!') 
+st.caption('Columns to examine: safety of care national comparison, mortality nation comparison and outpatient services')
 SB_Outpt_performance_pivot = sb_outpt.pivot_table(index=['hospital_name', 'mortality_national_comparison','safety_of_care_national_comparison'],values=['outpatient_services'])
 st.dataframe(SB_Outpt_performance_pivot)  
+
+# Safety of care national comparison
+st.subheader('NY Hospitals - Safety of Care National Comparison')
+bar2 = hospitals_ny['safety_of_care_national_comparison'].value_counts().reset_index()
+fig2 = px.bar(bar2, x='index', y='safety_of_care_national_comparison')
+st.plotly_chart(fig2)
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
 
 
 
