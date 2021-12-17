@@ -102,24 +102,14 @@ st.dataframe(Presbyterian_inpt)
 
 # Let take a look at ALL NY Hospitals!-------------------------------------------------------------------------------------- 
 
-st.subheader('Now that we have looked at our datasets, lets look at the following question:')
-st.write('1. How does Stony Brooks hospital type compare to the rest of New York?')
-
-
-# Quickly creating a pivot table 
-#st.subheader('Hospital Data Pivot Table')
-#dataframe_pivot = df_hospital_2.pivot_table(index=['state','city'],values=['effectiveness_of_care_national_comparison_footnote'],aggfunc='mean')
-#st.dataframe(dataframe_pivot)
+st.subheader('Now that we have looked at our datasets, lets look at some questions')
+st.write( 'How does Stony Brooks hospital type compare to the rest of New York? Lets briefly explore the types of hospitals and what kind SBU is considered')
 
 # Start with creating a dataframe for NY hospitals
 st.header('New York Hospitals')
 hospitals_ny = df_hospital_2[df_hospital_2['state'] == 'NY']
 st.dataframe(hospitals_ny)
 hospitals_ny = hospitals_ny.sort_values('hospital_name')
-
-#sb_inpatient = df_inpatient_2[df_inpatient_2['provider_id'] == 330393]
-
-#sb_outpatient = df_outpatient_2[df_outpatient_2['provider_id'] == 330393]
 
 #Bar Chart
 st.subheader('Hospital Type - NY')
@@ -132,6 +122,20 @@ st.markdown('Stony Brook is categorized as acute care, which falls under the maj
 st.subheader('With a PIE Chart:')
 fig = px.pie(bar1, values='hospital_type', names='index')
 st.plotly_chart(fig)
+
+st.header('1. Lets continue to explore SB Hospital by answering the following')
+st.subheader('Most expensive DRG for SBU outpatient/hospital')
+st.write('We can see based on the pivot table below that:For SBU hospital/outpatient facilities the Most expensive outpatient DRG is 0074 - Level IV Endoscopy Upper Airway')
+SB_Outpt_DRG_pivot = sb_outpt.pivot_table(index=['provider_id','apc'],values=['average_total_payments'])
+SB_Outpt_DRG_pivot_desc = SB_Outpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
+st.dataframe(SB_Outpt_DRG_pivot_desc)  
+
+st.subheader('2. Lets answer: Most expensive DRG for SBU inpatient/hospital')
+st.write('We can see based on the pivot table below that: the most expensive DRG for SBU inpatient/hospital df was 003 - ECMO OR TRACH W MV >96 HRS OR PDX EXC FACE, MOUTH & NECK W MAJ O.R.	216636.88')
+SB_inpt_DRG_pivot = sb_inpt.pivot_table(index=['provider_id','drg_definition'],values=['average_total_payments'])
+SB_inpt_DRG_pivot_desc = SB_inpt_DRG_pivot.sort_values(['average_total_payments'], ascending=False)
+st.dataframe(SB_inpt_DRG_pivot_desc)
+
 
 ### Here's a Map of NY hospital locations-----------------------------------------------------------------------
 
