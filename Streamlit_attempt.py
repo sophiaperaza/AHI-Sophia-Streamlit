@@ -39,7 +39,7 @@ def load_outpatient():
   
 ### Title section
 st.title('CMS - Hospital/Inpatient/Outpatient Data')
-st.subheader('HHA 507 - Final Assignment by: Sophia Peraza :smile:') 
+st.subheader('HHA 507 - Final Assignment by: Sophia Peraza ') 
 st.write(':santa: :snowflake: P.S. Happy Holidays! :snowflake: :santa:') 
 
 # loading the data:     
@@ -112,8 +112,7 @@ bar2 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().res
 fig2 = px.bar(bar2, x='index', y='timeliness_of_care_national_comparison')
 st.plotly_chart(fig2)
 
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national
-        average as it relates to timeliness of care')
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
 
 
 
