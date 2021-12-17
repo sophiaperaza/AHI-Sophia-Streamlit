@@ -172,7 +172,7 @@ fig1 = px.bar(bar1, x='index', y='safety_of_care_national_comparison')
 st.plotly_chart(fig1)
 st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care')
 
-## Mortality National Compariso-NY
+## Mortality National Comparison-NY
 st.subheader('NY Hospitals - Mortality National Comparison')
 bar2 = hospitals_ny['mortality_national_comparison'].value_counts().reset_index()
 fig2 = px.bar(bar2, x='index', y='mortality_national_comparison')
@@ -200,7 +200,12 @@ st.subheader('NY Hospitals - Patient experience national comparison')
 bar5 = hospitals_ny['patient_experience_national_comparison'].value_counts().reset_index()
 fig5 = px.bar(bar5, x='index', y='patient_experience_national_comparison')
 st.plotly_chart(fig5)
-st.markdown(' Based on the above, we can see the majority of NY is the same as the national average for patient experience')
+st.markdown(' Based on the above, we can see the majority of NY is BELOW as the national average for patient experience!!')
+
+
+st.subheader('Lets examine: How does Stony Brook compare to the rest of NY in regards medicare coverage vs. covered payment-inpatient')
+SB_inpt_coverage_pivot = sb_inpt.pivot_table(index=['hospital_name'],values=['average_covered_charges','average_total_payments','average_medicare_payments'])
+st.dataframe(SB_inpt_coverage_pivot)
 
 
 
