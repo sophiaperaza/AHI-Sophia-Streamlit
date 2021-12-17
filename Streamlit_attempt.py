@@ -55,10 +55,10 @@ st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
 
 st.header('Outpatient Data Preview')
-st.dataframe(load_outpatient() )
+st.dataframe(df_outpatient_2)
 
-st.header('Hospital Data Preview')
-st.dataframe(load_hospitals())
+st.header('Inpatient Data Preview')
+st.dataframe(df_inpatient_2)
 
 ## We will need to merge hospital & outpatient // hospital & inpatient
 st.header('Hospital & Outpatient Data')
