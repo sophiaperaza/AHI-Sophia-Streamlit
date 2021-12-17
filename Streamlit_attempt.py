@@ -166,11 +166,17 @@ st.dataframe(SB_Outpt_performance_pivot)
 
 # Safety of care national comparison
 st.subheader('NY Hospitals - Safety of Care National Comparison')
-bar2 = hospitals_ny['safety_of_care_national_comparison'].value_counts().reset_index()
-fig2 = px.bar(bar2, x='index', y='safety_of_care_national_comparison')
-st.plotly_chart(fig2)
-st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
+bar1 = hospitals_ny['safety_of_care_national_comparison'].value_counts().reset_index()
+fig1 = px.bar(bar1, x='index', y='safety_of_care_national_comparison')
+st.plotly_chart(fig1)
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care :sad:')
 
+## Mortality National Comparison
+st.subheader('NY Hospitals - Mortality National Comparison')
+bar2 = hospitals_ny['mortality_national_comparison'].value_counts().reset_index()
+fig2 = px.bar(bar2, x='index', y='mortality_national_comparison')
+st.plotly_chart(fig2)
+st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to Safety of care :sad:')
 
 
 
@@ -189,9 +195,9 @@ st.map(hospitals_ny_gps)
 ## -----------------------------------------------------------------------------------------------------------
 #Timeliness of Care
 st.subheader('NY Hospitals - Timeliness of Care')
-bar2 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
-fig2 = px.bar(bar2, x='index', y='timeliness_of_care_national_comparison')
-st.plotly_chart(fig2)
+bar3 = hospitals_ny['timeliness_of_care_national_comparison'].value_counts().reset_index()
+fig3 = px.bar(bar3, x='index', y='timeliness_of_care_national_comparison')
+st.plotly_chart(fig3)
 
 st.markdown('Based on this above bar chart, we can see the majority of hospitals in the NY area fall below the national average as it relates to timeliness of care')
 
