@@ -50,15 +50,20 @@ df_outpatient_2 = load_outpatient()
 
 st.header('We will begin previewing at our datasets first')
 st.caption('Note: these datasets provide insight into hospital, inpatient and outpatient payment and performance data across the United States') 
-# Previewing the dataframes 
+# Previewing the dataframes
+df_hospital_2['provider_id'] = df_hospital_2['provider_id'].astype(str)
+df_inpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+df_outpatient_2['provider_id'] = df_outpatient_2['provider_id'].astype(str)
+
 st.header('Hospital Data Preview')
 st.dataframe(df_hospital_2)
+
+st.header('Inpatient Data Preview')
+st.dataframe(df_inpatient_2)
 
 st.header('Outpatient Data Preview')
 st.dataframe(df_outpatient_2)
 
-st.header('Inpatient Data Preview')
-st.dataframe(df_inpatient_2)
 
 ## We will need to merge hospital & outpatient // hospital & inpatient
 st.header('Hospital & Outpatient Data')
