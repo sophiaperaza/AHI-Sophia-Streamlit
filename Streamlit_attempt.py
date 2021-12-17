@@ -158,6 +158,14 @@ NSLIJ_outpt_DRG_pivot_desc = NSLIJ_outpt_DRG_pivot.sort_values(['average_total_p
 st.dataframe(NSLIJ_outpt_DRG_pivot_desc)  
 
 
+st.subheader('4. Lets examine: How does SBU compare to the rest of NY (outpatient/hospital) ? We will interpret this question in terms of performance for outpatient')
+st.write('Columns to examine: safety of care national comparison, mortality nation comparison and outpatient services')
+SB_Outpt_performance_pivot = sb_outpt.pivot_table(index=['hospital_name', 'mortality_national_comparison','safety_of_care_national_comparison'],values=['outpatient_services'])
+st.dataframe(SB_Outpt_performance_pivot)  
+
+
+
+
 ### Here's a Map of NY hospital locations-------------------------------------------------------------------------------------------
 
 st.subheader('Map of NY Hospital Locations')
