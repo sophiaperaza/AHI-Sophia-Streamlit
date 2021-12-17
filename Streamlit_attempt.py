@@ -60,6 +60,15 @@ st.dataframe(load_outpatient() )
 st.header('Hospital Data Preview')
 st.dataframe(load_hospitals())
 
+## We will need to merge hospital & outpatient // hospital & inpatient
+st.header('Hospital & Outpatient Data')
+outpatient_merge = df_outpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+st.dataframe(outpatient_merge)
+
+st.header('Hospital & Outpatient Data')
+inpatient_merge = df_inpatient_2.merge(df_hospital_2, how = 'left', left_on = 'provider_id', right_on = 'provider_id')
+st.dataframe(inpatient_merge)
+
 # Let take a look at NY Hospitals!-------------------------------------------------------------------------------------- 
 
 st.subheader('Now that we have looked at our datasets, lets look at the following question:')
@@ -131,12 +140,12 @@ st.header( str(total_inpatient_count) )
 
 
 ##Common D/C ---------------------------------------------------------------------------------------------
-## Other Questions to keep in mind 
+## Questions to keep in mind 
 ## 2. Most expensive inpatient DRGs
 ## 3. Most expensive outpatient DRGS
 
-
-common_discharges = inpatient_ny.groupby('drg_definition')['total_discharges'].sum().reset_index()
+SBU_Inpatient = df_merged_clean2[df_merged_clean2['hospital_name'] == 'SUNY/STONY BROOK UNIVERSITY HOSPITAL']
+common_discharges = inpatient_ny.groupby('drg_definition')['average_total_payments'].sum().reset_index()
 
 
 top10 = common_discharges.head(10)
